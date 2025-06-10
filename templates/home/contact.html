@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/contact.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>Contact Us</title>
+</head>
+
+<body>
+    <h1>Contact Us</h1>
+    <div class="container my-4">
+        <h3>Contact Us</h3>
+        <form action="/contact" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required placeholder="Enter Your Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required
+                    placeholder="Enter Your Email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required
+                    placeholder="Enter Your Phone Number">
+            </div>
+            <div class="form-group">
+                <label for="desc">How May We Help You?</label>
+                <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" onclick="openPopup()">
+                <div class="container1">
+                    <div class="popup" id="popup">
+                        <img src="/static/image/tick.jpg">
+                        <h2>Thank You</h2>
+                        <p>Your response have been submitted. Thanks!</p>
+                        <p>We will reach you soon</p>
+                        <button type="button" onclick="closePopup()">OK</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    let Popup = document.getElementById("popup");
+
+    function openPopup() {
+        if (areAllFieldsFilled()) {
+            Popup.classList.add("open-popup");
+        } else {
+            console.log("Please fill all required fields before opening the popup.");
+        }
+    }
+
+    function closePopup() {
+        Popup.classList.remove("open-popup");
+        contactForm.reset();
+    }
+
+
+    function areAllFieldsFilled() {
+        let requiredFields = document.querySelectorAll('[required]');
+        for (let field of requiredFields) {
+            if (!field.value) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+</script>
+
+</html>

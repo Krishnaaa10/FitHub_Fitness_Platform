@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register Form</title>
+  <link rel="stylesheet" href="/static/loginstyle.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('https://static.vecteezy.com/system/resources/previews/037/228/850/non_2x/ai-generated-exercise-machines-in-a-gym-free-photo.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    .wrapper {
+      width: 300px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    
+    .wrapper h1 {
+      margin-bottom: 20px;
+      color: orange;
+    }
+    
+    .input-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-box input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    .input-box i {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      color: #777;
+    }
+    
+    .remember-forgot {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .remember-forgot input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: orange;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .register-link p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <form id="login-form" class="form">
+        <h1>Login</h1>
+        <div class="input-box">
+          <input type="text" id="login-username" placeholder="Username" required>
+          <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+          <input type="password" id="login-password" placeholder="Password" required>
+          <i class='bx bxs-lock-alt'></i>
+        </div>
+        <div class="remember-forgot">
+          <label><input type="checkbox">Remember Me</label>
+          <a href="#">Forgot Password</a>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="register-link">
+          <p>Don't have an account? <a href="#" class="register-toggle">Register</a></p>
+        </div>
+      </form>
+
+      <form id="register-form" class="form" style="display: none;">
+        <h1>Register</h1>
+        <div class="input-box">
+          <input type="text" id="register-username" placeholder="Username" required>
+          <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+          <input type="email" id="register-email" placeholder="Email" required>
+          <i class='bx bx-mail-send'></i>
+        </div>
+        <div class="input-box">
+          <input type="password" id="register-password" placeholder="Password" required>
+          <i class='bx bxs-lock-alt'></i>
+        </div>
+        <button type="submit" class="btn"><a href="http://127.0.0.1:5500/templates/home/gym.html">Register</a></button>
+        <div class="register-link">
+          <p>Already have an account? <a href="#" class="register-toggle">Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const registerToggle = document.querySelector('.register-toggle');
+
+      // Dummy user data
+      const users = [
+        { id: 1, username: 'john_doe', email: 'john@example.com', password: 'password123' },
+        { id: 2, username: 'jane_doe', email: 'jane@example.com', password: 'password456' },
+        { id: 3, username: 'Anshul Sharma', email: 'Anshuls@gmail.com', password: 'password456' },
+        { id: 4, username: '', email: '', password: 'password456' },
+        { id: 5, username: 'jane_doe', email: 'jane@example.com', password: 'password456' },
+        { id: 6, username: 'jane_doe', email: 'jane@example.com', password: 'password456' },
+      ];
+
+      // Function to simulate login
+      function login(username, password) {
+        return users.find(user => user.username === username && user.password === password);
+      }
+
+      // Function to simulate registration
+      function register(username, email, password) {
+        // Check if the username or email is already taken
+        const existingUser = users.find(user => user.username === username || user.email === email);
+        if (existingUser) {
+          throw new Error('Username or email already exists');
+        }
+
+        // Generate a unique ID for the new user
+        const id = users.length + 1;
+
+        // Create a new user
+        const newUser = { id, username, email, password };
+        users.push(newUser);
+        return newUser;
+      }
+
+      // Toggle between login and register forms
+      registerToggle.addEventListener('click', function(event) {
+        event.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+      });
+
+      // Function to handle login form submission
+      loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        // Simulate login
+        try {
+          const user = login(username, password);
+          console.log('Login successful:', user);
+          // Redirect to the home page after successful login
+          window.location.href = 'http://127.0.0.1:8000/home#';
+        } catch (error) {
+          console.error('Login failed:', error.message);
+        }
+      });
+
+      // Function to handle register form submission
+      registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
+        // Simulate registration
+        try {
+          const newUser = register(username, email, password);
+          console.log('Registration successful:', newUser);
+        } catch (error) {
+          console.error('Registration failed:', error.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
