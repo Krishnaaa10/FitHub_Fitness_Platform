@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-z4%$3+9kvyk2ty^*linbfb#zw2a=tbot3*5h#z^q65_41!qbj+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fithub-fitness-platform.onrender.com']
+
 
 
 # Application definition
@@ -131,3 +132,4 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
